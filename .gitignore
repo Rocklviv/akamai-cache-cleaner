@@ -1,0 +1,5 @@
+.idea/
+dist/
+debian/
+build/
+.DS_Store
