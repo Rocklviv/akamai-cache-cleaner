@@ -1,7 +1,15 @@
 {
+  "AppName": "cache-cleaner",
   "ArtifactsDest": "build",
   "ConfigVersion": "0.9",
   "PackageVersion": "0.1.0",
   "TaskSettings": {
+  },
+  "BuildSettings": {
+    "LdFlags": "-s",
+    "LdFlagsXVars": {
+      "TimeNow": "main.BUILD_DATE",
+      "Version": "main.VERSION"
+    }
   }
 }

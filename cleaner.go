@@ -1,22 +1,24 @@
 package main
 
 import (
-	"os"
-	"os/user"
-	"fmt"
+	"bytes"
 	"encoding/json"
 	"encoding/base64"
+	"fmt"
 	"flag"
+	"io/ioutil"
+	"net/http"
+	"os"
+	"os/user"
 	"path/filepath"
 	"strings"
-	"net/http"
-	"bytes"
-	"io/ioutil"
 )
 
 var (
 	// Current version
-	VERSION = "snapshot"
+	VERSION = "0.1.0"
+	// Build date
+	BUILD_DATE = ""
 	// Directory to read recursively
 	dir = ""
 	// Domain name if defined
