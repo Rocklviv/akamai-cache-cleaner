@@ -5,11 +5,15 @@
   "PackageVersion": "0.1.0",
   "TaskSettings": {
   },
+  "Tasks": [
+    "go-fmt",
+    "default"
+  ],
   "BuildSettings": {
     "LdFlags": "-s",
     "LdFlagsXVars": {
-      "TimeNow": "main.BUILD_DATE",
-      "Version": "main.VERSION"
+      "TimeNow": "cleaner.BUILD_DATE",
+      "Version": "cleaner.VERSION"
     }
   }
 }

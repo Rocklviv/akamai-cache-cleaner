@@ -2,10 +2,10 @@ package main
 
 import (
 	"bytes"
-	"encoding/json"
 	"encoding/base64"
-	"fmt"
+	"encoding/json"
 	"flag"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -35,19 +35,18 @@ type Configuration struct {
 	QueueLengthUri string `json:"queue_length_uri"`
 }
 
-
 type Object struct {
 	Objects []string `json:"objects"`
 }
 
 type CacheResponse struct {
-	EstimatedSeconds 	json.Number	`json:"estimatedSeconds"`
-	ProgressUri 		string		`json:"progressUri"`
-	PurgeId			string		`json:"purgeId"`
-	SupportId		string		`json:"supportId"`
-	HttpStatus		json.Number	`json:"httpStatus"`
-	Detail			string		`json:"detail"`
-	PingAfterSeconds	json.Number	`json:"pingAfterSeconds"`
+	EstimatedSeconds json.Number `json:"estimatedSeconds"`
+	ProgressUri      string      `json:"progressUri"`
+	PurgeId          string      `json:"purgeId"`
+	SupportId        string      `json:"supportId"`
+	HttpStatus       json.Number `json:"httpStatus"`
+	Detail           string      `json:"detail"`
+	PingAfterSeconds json.Number `json:"pingAfterSeconds"`
 }
 
 func readConfig() Configuration {
@@ -59,12 +58,14 @@ func readConfig() Configuration {
 	file, e := os.Open(homedir + "/.akamai.json")
 	if e != nil {
 		fmt.Println("Error opening file:", e)
+		os.Exit(1)
 	}
 	decoded := json.NewDecoder(file)
 	config := Configuration{}
 	err := decoded.Decode(&config)
 	if err != nil {
 		fmt.Println("Error reading config file: ", err)
+		os.Exit(1)
 	}
 	return config
 }
@@ -87,7 +88,7 @@ func getListOfFiles(ext string) []string {
 			httpServers := strings.Split(serverName, ",")
 			newpath := strings.Replace(path, dir, "", -1)
 			for _, a := range extensions {
-				if "." + a == filepath.Ext(info.Name()) {
+				if "."+a == filepath.Ext(info.Name()) {
 					for _, b := range httpServers {
 						httpPath := b + "/" + newpath
 						listFiles = append(listFiles, httpPath)
@@ -125,7 +126,7 @@ func sendRequest() {
 	req, _ := http.NewRequest("POST", cfg.APIUrl, b)
 	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("Accept", "text/plain")
-	req.Header.Add("Authorization", "Basic " + fmt.Sprintf(basicAuth(cfg.Username, cfg.Password)))
+	req.Header.Add("Authorization", "Basic "+fmt.Sprintf(basicAuth(cfg.Username, cfg.Password)))
 	response, err := client.Do(req)
 	if err != nil {
 		fmt.Println("Cannot get response or request is not valid.")
